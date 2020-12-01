@@ -1,0 +1,1 @@
+Simple hook to track changes of state.
