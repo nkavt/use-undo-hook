@@ -2,8 +2,8 @@ import { MutableRefObject, SetStateAction, useCallback, useEffect, useRef } from
 import { detectRedo, detectUndo, forceClone } from './helper';
 
 interface UndoInterface {
-    undoable: boolean;
-    redoable: boolean;
+    undoable: () => boolean;
+    redoable: () => boolean;
 
     undos: any[];
     redos: any[];
@@ -28,11 +28,11 @@ const useUndo = (params: UseUndoParams): UndoInterface => {
         redos: [],
     });
 
-    const undoable = hist.current.undos.length > 1;
-    const redoable = hist.current.redos.length > 0;
+    const undoable = () => hist.current.undos.length > 1;
+    const redoable = () => hist.current.redos.length > 0;
 
     const undo = (): void => {
-        if (undoable) return;
+        if (!undoable()) return;
         const { undos, redos } = hist.current;
 
         redos.push(undos.pop());
@@ -41,7 +41,7 @@ const useUndo = (params: UseUndoParams): UndoInterface => {
     };
 
     const redo = (): void => {
-        if (redoable) return;
+        if (!redoable()) return;
 
         const { undos, redos } = hist.current;
 
@@ -75,14 +75,11 @@ const useUndo = (params: UseUndoParams): UndoInterface => {
         const el = element.current || document;
 
         el.addEventListener('keydown', keyPressEvent);
-    }, []);
 
-    useEffect(() => {
         return () => {
-            const el = element.current || document;
             el.removeEventListener('keydown', keyPressEvent);
         };
-    });
+    }, []);
 
     return {
         undoable,
