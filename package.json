@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc"
   },
-  "author": "",
+  "author": "Nikoloz Kavtaradze",
   "license": "ISC",
   "devDependencies": {
     "@types/react": "^17.0.0",
@@ -14,5 +14,17 @@
   },
   "peerDependencies": {
     "react": "^17.0.1"
-  }
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nKavtaradze/use-undo-hook.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nKavtaradze/use-undo-hook/issues"
+  },
+  "homepage": "https://github.com/nKavtaradze/use-undo-hook#readme"
 }
