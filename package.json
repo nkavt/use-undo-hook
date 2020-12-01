@@ -2,7 +2,8 @@
   "name": "@nkavtaradze/use-undo-hook",
   "version": "1.0.0",
   "description": "Functionality to undo state changes in React",
-  "main": "index.js",
+  "main": "lib/use-undo.js",
+  "types": "lib/use-undo.d.ts",
   "scripts": {
     "build": "tsc"
   },
@@ -23,6 +24,9 @@
     "type": "git",
     "url": "git+https://github.com/nKavtaradze/use-undo-hook.git"
   },
+  "files": [
+    "lib/**/*"
+  ],
   "bugs": {
     "url": "https://github.com/nKavtaradze/use-undo-hook/issues"
   },
