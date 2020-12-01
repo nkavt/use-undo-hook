@@ -28,7 +28,7 @@ const useUndo = (params: UseUndoParams): UndoInterface => {
         redos: [],
     });
 
-    const undoable = hist.current.undos.length > 0;
+    const undoable = hist.current.undos.length > 1;
     const redoable = hist.current.redos.length > 0;
 
     const undo = (): void => {
