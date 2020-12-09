@@ -31,5 +31,12 @@
   "bugs": {
     "url": "https://github.com/nKavtaradze/use-undo-hook/issues"
   },
-  "homepage": "https://github.com/nKavtaradze/use-undo-hook#readme"
+  "homepage": "https://github.com/nKavtaradze/use-undo-hook#readme",
+  "keywords": [
+    "react",
+    "javascript",
+    "hook",
+    "undo",
+    "redo"
+  ]
 }
