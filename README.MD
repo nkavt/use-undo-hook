@@ -66,7 +66,7 @@ export default App;
 
 
 <p>
-    If you want to bind it on different DOM element you past pass <b>element</b> variable to <b>ref</b> attribute like this:
+    If you want to bind it on different DOM element you mast pass <b>element</b> variable to <b>ref</b> attribute like this:
 </p>
 
 ```js
