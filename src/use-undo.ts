@@ -1,9 +1,9 @@
-import { MutableRefObject, SetStateAction, useCallback, useEffect, useRef } from 'react';
+import { MutableRefObject, SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
 import { detectRedo, detectUndo, forceClone } from './helper';
 
 interface UndoInterface {
-    undoable: () => boolean;
-    redoable: () => boolean;
+    undoable: boolean;
+    redoable: boolean;
 
     undos: any[];
     redos: any[];
@@ -14,12 +14,12 @@ interface UndoInterface {
 }
 
 interface UseUndoParams {
-    values: any;
-    setValues: SetStateAction<any>;
+    value: any;
+    setValue: SetStateAction<any>;
 }
 
 const useUndo = (params: UseUndoParams): UndoInterface => {
-    const { values, setValues } = params;
+    const { value, setValue } = params;
 
     const element = useRef<HTMLElement>(null);
 
@@ -28,35 +28,40 @@ const useUndo = (params: UseUndoParams): UndoInterface => {
         redos: [],
     });
 
-    const undoable = () => hist.current.undos.length > 1;
-    const redoable = () => hist.current.redos.length > 0;
+    const [undoable, setUndoable] = useState<boolean>(hist.current.undos.length > 1);
+    const [redoable, setRedoable] = useState<boolean>(hist.current.redos.length > 0);
+
+    const setUndoableRedoable = () => {
+        setUndoable(hist.current.undos.length > 1);
+        setRedoable(hist.current.redos.length > 0);
+    }
+
+    
 
     const undo = (): void => {
-        if (!undoable()) return;
+        if (hist.current.undos.length <= 1) return;
         const { undos, redos } = hist.current;
-
         redos.push(undos.pop());
-
-        setValues(undos[undos.length - 1]);
+        setValue(undos[undos.length - 1]);
+        setUndoableRedoable();
     };
 
     const redo = (): void => {
-        if (!redoable()) return;
-
+        if (hist.current.redos.length === 0) return;
         const { undos, redos } = hist.current;
-
         undos.push(redos.pop());
-
-        setValues(undos[undos.length - 1]);
+        setValue(undos[undos.length - 1]);
+        setUndoableRedoable();
     };
 
     useEffect(() => {
         const { undos } = hist.current;
-        if (undos[undos.length - 1] === values) return;
+        if (undos[undos.length - 1] === value) return;
 
-        undos.push(forceClone(values));
+        undos.push(forceClone(value));
         hist.current.redos = [];
-    }, [values]);
+        setUndoableRedoable();
+    }, [value]);
 
     const keyPressEvent = useCallback((e: KeyboardEvent): any => {
         const { undos, redos } = hist.current;
