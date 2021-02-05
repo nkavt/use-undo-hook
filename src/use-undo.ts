@@ -31,9 +31,14 @@ const useUndo = (params: UseUndoParams): UndoInterface => {
     const [undoable, setUndoable] = useState<boolean>(hist.current.undos.length > 1);
     const [redoable, setRedoable] = useState<boolean>(hist.current.redos.length > 0);
 
+    const [undos, setUndos] = useState<any[]>(hist.current.undos);
+    const [redos, setRedos] = useState<any[]>(hist.current.redos);
+
     const setUndoableRedoable = () => {
         setUndoable(hist.current.undos.length > 1);
         setRedoable(hist.current.redos.length > 0);
+        setUndos(hist.current.undos);
+        setRedos(hist.current.redos);
     }
 
     
@@ -89,7 +94,8 @@ const useUndo = (params: UseUndoParams): UndoInterface => {
     return {
         undoable,
         redoable,
-        ...hist.current,
+        undos,
+        redos,
         redo,
         undo,
         element,
