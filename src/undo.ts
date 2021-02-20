@@ -3,10 +3,6 @@ import { forceClone } from './helper';
 class Undo {
     undos: any[] = [];
     redos: any[] = [];
-    
-    constructor(initialValue: any) {
-        this.change(initialValue);
-    }
 
     change(val: any) {
         this.redos = [];

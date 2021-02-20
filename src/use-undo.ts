@@ -26,12 +26,12 @@ const useUndo = (params: UseUndoParams): UndoInterface => {
 
     const element = useRef<HTMLElement>(null);
 
-    const undoStack = useUndoStack(value);
+    const undoStack = useUndoStack();
 
     const [undoable, setUndoable] = useState<boolean>(false);
     const [redoable, setRedoable] = useState<boolean>(false);
 
-    const [undos, setUndos] = useState<any[]>([value]);
+    const [undos, setUndos] = useState<any[]>([]);
     const [redos, setRedos] = useState<any[]>([]);
 
     const setUndoableRedoable = () => {
@@ -57,6 +57,7 @@ const useUndo = (params: UseUndoParams): UndoInterface => {
     };
 
     useEffect(() => {
+        
         if (undoStack.current!.lastUndo() === value) return;
 
         undoStack.current!.change(value);
