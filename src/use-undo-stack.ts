@@ -1,14 +1,14 @@
-import { useEffect, useRef } from 'react';
-import Undo from './undo';
+import { useEffect, useRef } from "react";
+import Undo from "./undo";
 
 const useUndoStack = () => {
-    const undoStack = useRef<Undo | null>(null);
+  const undoStack = useRef<Undo | null>(null);
 
-    useEffect(() => {
-        undoStack.current = new Undo();
-    },[]);
+  useEffect(() => {
+    undoStack.current = new Undo();
+  }, []);
 
-    return undoStack;
-}
+  return undoStack;
+};
 
 export default useUndoStack;
