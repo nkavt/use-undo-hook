@@ -1,10 +1,10 @@
 import { forceClone } from './helper';
 
-class Undo {
-    undos: any[] = [];
-    redos: any[] = [];
+class Undo<T = any> {
+    undos: T[] = [];
+    redos: T[] = [];
 
-    change(val: any) {
+    change(val: T) {
         this.redos = [];
         this.undos.push(forceClone(val));
     }
@@ -20,21 +20,22 @@ class Undo {
     undo(): boolean {
         if(!this.canUndo()) return false;
 
-        this.redos.push(this.undos.pop());
+        this.redos.push(this.undos.pop()!);
         return true;
     }
 
     redo(): boolean {
         if(!this.canRedo()) return false;
-        this.undos.push(this.redos.pop());
+
+        this.undos.push(this.redos.pop()!);
         return true;
     }
 
-    lastUndo(): any {
+    lastUndo(): T {
         return this.undos[this.undos.length - 1];
     }
 
-    lastRedo(): any {
+    lastRedo(): T {
         return this.redos[this.redos.length - 1];
     }
 }

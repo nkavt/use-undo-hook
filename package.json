@@ -1,6 +1,6 @@
 {
   "name": "@nkavtaradze/use-undo-hook",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Functionality to undo state changes in React",
   "main": "lib/use-undo.js",
   "types": "lib/use-undo.d.ts",

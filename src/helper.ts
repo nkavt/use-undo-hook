@@ -1,9 +1,9 @@
-export const forceClone = (obj: any) => JSON.parse(JSON.stringify(obj));
+export const forceClone = <T = any>(obj: T): T => JSON.parse(JSON.stringify(obj));
 
 export const isMac = (): boolean => navigator.platform.slice(0, 3).toUpperCase() === 'MAC';
 
 
-export const detectUndo = (e: KeyboardEvent):boolean => {
+export const detectUndo = (e: KeyboardEvent): boolean => {
     const isZ = e.code === 'KeyZ';
     if(isMac()) {
         return e.metaKey && isZ;
@@ -12,7 +12,7 @@ export const detectUndo = (e: KeyboardEvent):boolean => {
     return e.ctrlKey && isZ;
 }
 
-export const detectRedo = (e: KeyboardEvent):boolean => {
+export const detectRedo = (e: KeyboardEvent): boolean => {
     if(isMac()) {
         return e.metaKey && e.shiftKey && e.code === 'KeyZ';
     } 

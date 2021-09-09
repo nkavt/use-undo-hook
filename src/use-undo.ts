@@ -1,14 +1,13 @@
 import { MutableRefObject, SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
-import { detectRedo, detectUndo, forceClone } from './helper';
-import Undo from './undo';
+import { detectRedo, detectUndo } from './helper';
 import useUndoStack from './use-undo-stack';
 
-interface UndoInterface {
+interface UndoInterface<T> {
     undoable: boolean;
     redoable: boolean;
 
-    undos: any[];
-    redos: any[];
+    undos: T[];
+    redos: T[];
 
     redo: () => void;
     undo: () => void;
@@ -21,7 +20,7 @@ interface UseUndoParams {
 }
 
 
-const useUndo = (params: UseUndoParams): UndoInterface => {
+const useUndo = <T = any>(params: UseUndoParams): UndoInterface<T> => {
     const { value, setValue } = params;
 
     const element = useRef<HTMLElement>(null);
@@ -31,8 +30,8 @@ const useUndo = (params: UseUndoParams): UndoInterface => {
     const [undoable, setUndoable] = useState<boolean>(false);
     const [redoable, setRedoable] = useState<boolean>(false);
 
-    const [undos, setUndos] = useState<any[]>([]);
-    const [redos, setRedos] = useState<any[]>([]);
+    const [undos, setUndos] = useState<T[]>([]);
+    const [redos, setRedos] = useState<T[]>([]);
 
     const setUndoableRedoable = () => {
         setUndoable(undoStack.current!.canUndo());
@@ -64,7 +63,7 @@ const useUndo = (params: UseUndoParams): UndoInterface => {
         setUndoableRedoable();
     }, [value]);
 
-    const keyPressEvent = useCallback((e: KeyboardEvent): any => {
+    const keyPressEvent = useCallback((e: KeyboardEvent) => {
         if (detectRedo(e)) {
             e.preventDefault();
             return redo();
@@ -84,7 +83,7 @@ const useUndo = (params: UseUndoParams): UndoInterface => {
         return () => {
             el.removeEventListener('keydown', keyPressEvent);
         };
-    }, []);
+    }, [keyPressEvent]);
 
     return {
         undoable,
